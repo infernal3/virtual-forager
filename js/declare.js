@@ -2,6 +2,7 @@ const el = e => document.getElementById(e);
 const randInt = (e, t) => Math.round((Math.random() * (t - e + 1)) + e - 0.5);
 const NaNCheck = e => isNaN(e) ? "0" : e;
 const CBT = (e, t) => {el(`root_button_${t}`).textContent = e}
+const fmt = e => e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const T_DATA = [null,
     {name: "Oak", xp: 1, completeXPLow: 8, completeXPHigh: 12, toughness: 0, baseLogs: 12, req: 0, cute_name: "Oak Forest"},
