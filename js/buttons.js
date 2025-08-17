@@ -54,12 +54,12 @@ const LoadFunction = function () {
             PrintShop();
             break;
         case 4:
-            nav.index = Math.min(nav.index + 1, 9);
+            nav.index = Math.min(nav.index + 1, TOOLS.length - 2);
             
             PrintShop();
             break;
         case 10:
-            nav.index = Math.min(nav.index + 1, 5);
+            nav.index = Math.min(nav.index + 1, T_DATA.length - 2);
             PrintBiome();
             break;
     }
@@ -119,11 +119,11 @@ const LoadFunction = function () {
                     data.current.progress = 0;
                 }
             }
-            data.nextUpdate = Date.now() + (TOOLS[data.currentTool].speed * (data.current.toughness + 1));
+            data.nextUpdate = Date.now() + delayCalc()
         }
         else {
             Console.writeLn(`You're foraging too fast! Wait ${((data.nextUpdate - Date.now()) / 1000).toFixed(2)}s before foraging again.`);
-            Console.writeLn(`<em>Your foraging cooldown: ${((TOOLS[data.currentTool].speed * (data.current.toughness + 1))/1000).toFixed(2)}s</em>`);
+            Console.writeLn(`<em>Your foraging cooldown: ${(((delayCalc()))/1000).toFixed(2)}s${delayCalc() == 100 ? " (softcapped)" : ""}</em>`);
         }
     Console.print();
 },SellAll = function() {
@@ -162,7 +162,7 @@ const LoadFunction = function () {
     Console.writeLn(`Tool Stats: ${TOOLS[nav.index + 1].sweep} sweep, ${(1000 / TOOLS[nav.index + 1].speed).toFixed(2)} cutting speed`);
     Console.writeLn();
     if (nav.index > 0) Console.writeLn(`PREVIOUS item: ${TOOLS[nav.index].name}`);
-    if (nav.index < 9) Console.writeLn(`NEXT item: ${TOOLS[nav.index + 2].name}`);
+    if (nav.index < TOOLS.length - 2) Console.writeLn(`NEXT item: ${TOOLS[nav.index + 2].name}`);
     Console.print();
 },PurchaseTool = function() {
     if(data.tools[nav.index + 1]) {
@@ -201,7 +201,7 @@ const LoadFunction = function () {
     Console.writeLn(`Currently viewing: ${T_DATA[nav.index + 1].cute_name} - ${data.level >= T_DATA[nav.index + 1].req ? "" : "LOCKED"} (Level ${T_DATA[nav.index + 1].req})`);
     Console.writeLn();
     if (nav.index > 0) Console.writeLn(`PREVIOUS biome: ${T_DATA[nav.index].cute_name}`);
-    if (nav.index < 5) Console.writeLn(`NEXT biome: ${T_DATA[nav.index + 2].cute_name}`);
+    if (nav.index < T_DATA.length - 2) Console.writeLn(`NEXT biome: ${T_DATA[nav.index + 2].cute_name}`);
     Console.print();
 },SelectBiome = function() {
     if(data.level >= T_DATA[nav.index + 1].req) {
