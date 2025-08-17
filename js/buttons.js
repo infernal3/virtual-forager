@@ -133,22 +133,23 @@ const LoadFunction = function () {
         delta += NaNCheck(data.inventory.cores[prop]) * S_DATA.cores[prop];
         data.inventory.cores[prop] = 0;
     }
+    data.money += delta;
     if(delta == 0) {
         Console.writeLn("You tried to sell your entire inventory...");
         Console.writeLn("It was empty.");
     }
     else {
         Console.writeLn("You sold your entire inventory.");
-        Console.writeLn(`+${delta} money`);
+        Console.writeLn(`+${fmt(delta)} money`);
+        Console.writeLn(`You now have ${fmt(data.money)} money.`);
     }
-    data.money += delta;
     Console.print();
 },PrintShop = function() {
     Console.clear();
     Console.writeLn("Tools Shop");
-    Console.writeLn(`You have ${data.money} money.`);
+    Console.writeLn(`You have ${fmt(data.money)} money.`);
     Console.writeLn();
-    Console.writeLn(`Currently viewing: ${TOOLS[nav.index + 1].name} - ${data.tools[nav.index + 1] ? "PURCHASED" : "Cost " + TOOLS[nav.index + 1].cost + " money"}`);
+    Console.writeLn(`Currently viewing: ${TOOLS[nav.index + 1].name} - ${data.tools[nav.index + 1] ? "PURCHASED" : "Cost " + fmt(TOOLS[nav.index + 1].cost) + " money"}`);
     Console.writeLn(`<em>${TOOLS[nav.index + 1].lore}</em>`);
     Console.writeLn();
     if (nav.index > 0) Console.writeLn(`PREVIOUS item: ${TOOLS[nav.index].name}`);
@@ -165,17 +166,17 @@ const LoadFunction = function () {
     Console.writeLn("Virtual Forager Main Menu");
     Console.writeLn("<strong>Your Profile</strong>");
     Console.writeLn();
-    Console.writeLn(`You have ${data.money} money.`);
-    Console.writeLn(`<strong>Level ${data.level}</strong>, ${data.xp}/${levelingFormula(data.level)} XP to next level`);
+    Console.writeLn(`You have ${fmt(data.money)} money.`);
+    Console.writeLn(`<strong>Level ${data.level}</strong>, ${fmt(data.xp)}/${fmt(levelingFormula(data.level))} XP to next level`);
     Console.writeLn(`Current tool: ${TOOLS[data.currentTool].name}`);
-    Console.writeLn(`Current biome: ${T_DATA[data.biome].name}`);
+    Console.writeLn(`Current biome: ${T_DATA[data.biome].cute_name}`);
     Console.writeLn();
     Console.writeLn("<strong>Inventory</strong>");
     for(var prop in data.inventory.logs) {
-        Console.writeLn(`${data.inventory.logs[prop]} ${prop} Log`);
+        Console.writeLn(`${fmt(data.inventory.logs[prop])} ${prop} Log`);
     }
     for(var prop in data.inventory.cores) {
-        Console.writeLn(`${data.inventory.cores[prop]} ${prop} Core`);
+        Console.writeLn(`${fmt(data.inventory.cores[prop])} ${prop} Core`);
     }
     Console.print();
 },PrintBiome = function() {
@@ -183,10 +184,10 @@ const LoadFunction = function () {
     Console.writeLn("Biome Selection");
     Console.writeLn(`You are currently in the ${T_DATA[data.biome].name} biome.`);
     Console.writeLn();
-    Console.writeLn(`Currently viewing: ${T_DATA[nav.index + 1].name} - ${data.level >= T_DATA[nav.index + 1].req ? "" : "LOCKED"} (Level ${T_DATA[nav.index + 1].req})`);
+    Console.writeLn(`Currently viewing: ${T_DATA[nav.index + 1].cute_name} - ${data.level >= T_DATA[nav.index + 1].req ? "" : "LOCKED"} (Level ${T_DATA[nav.index + 1].req})`);
     Console.writeLn();
-    if (nav.index > 0) Console.writeLn(`PREVIOUS biome: ${T_DATA[nav.index].name}`);
-    if (nav.index < 5) Console.writeLn(`NEXT biome: ${T_DATA[nav.index + 2].name}`);
+    if (nav.index > 0) Console.writeLn(`PREVIOUS biome: ${T_DATA[nav.index].cute_name}`);
+    if (nav.index < 5) Console.writeLn(`NEXT biome: ${T_DATA[nav.index + 2].cute_name}`);
     Console.print();
 },SelectBiome = function() {
     if(data.level >= T_DATA[nav.index + 1].req) {
