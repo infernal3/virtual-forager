@@ -1,0 +1,112 @@
+@font-face {
+    font-family: "GNU Unifont";
+    src: url("./assets/unifont-15.0.01.woff");
+}
+
+#canvas {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+
+#root {
+    font-family: "GNU Unifont", sans-serif;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+div.clickable {
+    position: absolute;
+    height: 32px;
+    width: 120px;
+    text-align: center;
+    background: #1a1616;
+    color: #189226;
+    border: #189226 solid 4px;
+    padding-top: 1px;
+    font-size: 28px;
+    user-select: none;
+    -webkit-user-select: none;
+    
+}
+div.clickable.disabled {
+    background: #7a7676;
+    color: #080206;
+}
+.invisible {
+    display: none;
+}
+
+@media screen and (width >= 800px){
+    #console {
+        position: absolute;
+        text-align: left;
+        font-size: 20px;
+        left: 4%;
+        font-family: "GNU Unifont", monospace;
+        top: 160px;
+    }
+    #root_button_1{
+        left: 4%;
+        bottom: 50px;
+    }
+    #root_button_2{
+        left: 31%;
+        bottom: 50px;
+    }
+    #root_button_3{
+        right: 31%;
+        bottom: 50px;
+    }
+    #root_button_4{
+        right: 4%;
+        bottom: 50px;
+    }
+    #root_button_5{
+        right: 30px;
+        top: 30px;
+    }
+    #root_button_6{
+        right: 30px;
+        top: 100px;
+    }
+}
+@media screen and (width <= 799px) and (width >= 240px){
+    #console {
+        position: absolute;
+        text-align: left;
+        font-size: 14px;
+        left: 5px;
+        font-family: "GNU Unifont", monospace;
+        top: calc(57px + 25%);
+    }
+    #root_button_1{
+        left: 5px;
+        top: 9%;
+    }
+    #root_button_2{
+        left: 5px;
+        top: 25%;
+    }
+    #root_button_3{
+        left: 5px;
+        top: 69%;
+    }
+    #root_button_4{
+        left: 5px;
+        top: 85%;
+    }
+    #root_button_5{
+        right: 15px;
+        top: 15px;
+    }
+    #root_button_6{
+        right: 15px;
+        top: 85px;
+    }
+}
