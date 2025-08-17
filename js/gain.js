@@ -13,7 +13,8 @@ const gainXP = function(E) {
         Console.writeLn(`<strong>LEVEL UP</strong>${passed == 1 ? "" : "x" + passed} ${old} -> ${data.level}`);
     }
 }, levelingFormula = function(E) {
-    return 100;
+    var t = 100 * (Math.pow(1.05, E - 1) + (0.5 * (E - 1)));
+    return Math.floor(t * Math.pow(10, 2 - Math.floor(Math.log10(t)))) * Math.pow(10, Math.floor(Math.log10(t)) - 2);
 }, gainLog = function(E, T) {
     data.inventory.logs[T] += E;
     Console.writeLn(` + ${E} ${T+" Log"}`);
@@ -26,5 +27,5 @@ const gainXP = function(E) {
     gainXP(Math.ceil(randInt(T_DATA[E.type].completeXPLow, T_DATA[E.type].completeXPHigh) * E.size));
     gainCore(Math.ceil(randInt(4, 6) * E.size), T_DATA[E.type].name);
     var temp = Math.random() + 0.5;
-    data.current = {type: data.biome, size: temp, stage: 0, stages: 1, toughness: T_DATA[E.type].toughness, progress: 0, progressNeed: Math.round(T_DATA[E.type].baseLogs * temp)}
+    data.current = {type: data.biome, size: temp, stage: 0, stages: 1, toughness: T_DATA[data.biome].toughness, progress: 0, progressNeed: Math.round(T_DATA[data.biome].baseLogs * temp)}
 }
