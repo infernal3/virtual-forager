@@ -124,19 +124,13 @@ const LoadFunction = function () {
         else {
             Console.writeLn(`You're foraging too fast! Wait ${((data.nextUpdate - Date.now()) / 1000).toFixed(2)}s before foraging again.`);
             Console.writeLn(`<em>Your foraging cooldown: ${(((delayCalc()))/1000).toFixed(2)}s${delayCalc() == 100 ? " (softcapped)" : ""}</em>`);
+            Console.writeLn();
+            Console.writeLn("If you forage too fast your tool will break. Upgrade your tool to prevent this")
         }
     Console.print();
 },SellAll = function() {
     Console.clear();
-    var delta = 0;
-    for(var prop in data.inventory.logs) {
-        delta += NaNCheck(data.inventory.logs[prop]) * S_DATA.logs[prop];
-        data.inventory.logs[prop] = 0;
-    }
-    for(var prop in data.inventory.cores) {
-        delta += NaNCheck(data.inventory.cores[prop]) * S_DATA.cores[prop];
-        data.inventory.cores[prop] = 0;
-    }
+    var delta = calcInventory(true);
     data.money += delta;
     if(delta == 0) {
         Console.writeLn("You tried to sell your inventory...");
@@ -183,12 +177,12 @@ const LoadFunction = function () {
     Console.writeLn(`Current tool: ${TOOLS[data.currentTool].name}`);
     Console.writeLn(`Current biome: ${T_DATA[data.biome].cute_name}`);
     Console.writeLn();
-    Console.writeLn("<strong>Inventory</strong>");
+    Console.writeLn(`<strong>Inventory</strong> ${calcInventory(false) == 0 ? "" : `(Sell Value: ${calcInventory(false)} money)`}`);
     for(var prop in data.inventory.logs) {
-        Console.writeLn(`${fmt(data.inventory.logs[prop])} ${prop} Log`);
+        if(!!data.inventory.logs[prop]) Console.writeLn(`${fmt(data.inventory.logs[prop])} ${prop} Log`);
     }
     for(var prop in data.inventory.cores) {
-        Console.writeLn(`${fmt(data.inventory.cores[prop])} ${prop} Core`);
+        if(!!data.inventory.cores[prop]) Console.writeLn(`${fmt(data.inventory.cores[prop])} ${prop} Core`);
     }
     Console.print();
 },PrintBiome = function() {

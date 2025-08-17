@@ -7,6 +7,18 @@ const CBS = (e, t, y) => {
     if(y) el(`root_button_${t}`).classList.add(e)
     else  el(`root_button_${t}`).classList.remove(e)
 }
+const calcInventory = e => {
+    var delta = 0;
+    for(var prop in data.inventory.logs) {
+        delta += NaNCheck(data.inventory.logs[prop]) * S_DATA.logs[prop];
+        if(e) data.inventory.logs[prop] = 0;
+    }
+    for(var prop in data.inventory.cores) {
+        delta += NaNCheck(data.inventory.cores[prop]) * S_DATA.cores[prop];
+        if(e) data.inventory.cores[prop] = 0;
+    }
+    return delta;
+}
 const fmt = e => e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const T_DATA = [null,
