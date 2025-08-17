@@ -2,6 +2,10 @@ const el = e => document.getElementById(e);
 const randInt = (e, t) => Math.round((Math.random() * (t - e + 1)) + e - 0.5);
 const NaNCheck = e => isNaN(e) ? "0" : e;
 const CBT = (e, t) => {el(`root_button_${t}`).textContent = e}
+const CBS = (e, t, y) => {
+    if(y) el(`root_button_${t}`).classList.add(e)
+    else  el(`root_button_${t}`).classList.remove(e)
+}
 const fmt = e => e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const T_DATA = [null,
@@ -18,7 +22,7 @@ const TOOLS = [null,
     {name: "Rookie Axe", lore: "Basic starter axe.", sweep: 1.7, cost: 10, speed: 2000},
     {name: "Iron Axe", lore: "Cuts several logs at once.", sweep: 3.7, cost: 150, speed: 1500},
     {name: "Steel Axe", lore: "Cuts even more logs at once.", sweep: 5.5, cost: 750, speed: 700},
-    {name: "Rusty Chainsaw", lore: "It's rusty but can still cut down trees.", sweep: 9, cost: 4000, speed: 666},
+    {name: "Rusty Chainsaw", lore: "It's rusty but can still cut down trees.", sweep: 17, cost: 4000, speed: 1000},
     {name: "Chainsaw", lore: "Cuts down a huge amount of logs.", sweep: 19, cost: 10000, speed: 300},
     {name: "Polished Chainsaw", lore: "It's slightly better than an ordinary Chainsaw.", sweep: 21, cost: 50000, speed: 180},
     {name: "Treecapacitator", lore: "A forceful Axe that cuts many logs at once.", sweep: 35, cost: 250000, speed: 50},

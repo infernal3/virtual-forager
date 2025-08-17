@@ -1,5 +1,6 @@
 const LoadFunction = function () {
     LocalLoad();
+    PrintMenu();
 },Root1Handler = function () {
     switch (nav.menu) {
         case 0:
@@ -45,7 +46,8 @@ const LoadFunction = function () {
         case 1:
             nav.menu = 4;
             nav.index = 0;
-            CBT("PURCHASE", 1);
+            CBT("SELECT", 1);
+            if(data.currentTool == 1) CBS("disabled", 1, true);
             CBT("PREVIOUS", 2);
             CBT("NEXT", 3);
             CBT("BACK", 4);
@@ -53,6 +55,7 @@ const LoadFunction = function () {
             break;
         case 4:
             nav.index = Math.min(nav.index + 1, 9);
+            
             PrintShop();
             break;
         case 10:
@@ -78,6 +81,7 @@ const LoadFunction = function () {
         case 2:
         case 4:
         case 10:
+            CBS("disabled", 1, false);
             nav.menu = 1;
             nav.index = 0;
             CBT("FORAGE", 1);
@@ -135,7 +139,7 @@ const LoadFunction = function () {
     }
     data.money += delta;
     if(delta == 0) {
-        Console.writeLn("You tried to sell your entire inventory...");
+        Console.writeLn("You tried to sell your inventory...");
         Console.writeLn("It was empty.");
     }
     else {
@@ -145,22 +149,30 @@ const LoadFunction = function () {
     }
     Console.print();
 },PrintShop = function() {
+    CBT(data.tools[nav.index + 1] ? "SELECT" : "PURCHASE", 1);
+    if(data.currentTool == nav.index + 1) CBS("disabled", 1, true);
+    else CBS("disabled", 1, false);
     Console.clear();
     Console.writeLn("Tools Shop");
+    Console.writeLn(`Current tool: ${TOOLS[data.currentTool].name}`);
     Console.writeLn(`You have ${fmt(data.money)} money.`);
     Console.writeLn();
     Console.writeLn(`Currently viewing: ${TOOLS[nav.index + 1].name} - ${data.tools[nav.index + 1] ? "PURCHASED" : "Cost " + fmt(TOOLS[nav.index + 1].cost) + " money"}`);
     Console.writeLn(`<em>${TOOLS[nav.index + 1].lore}</em>`);
+    Console.writeLn(`Tool Stats: ${TOOLS[nav.index + 1].sweep} sweep, ${(1000 / TOOLS[nav.index + 1].speed).toFixed(2)} cutting speed`);
     Console.writeLn();
     if (nav.index > 0) Console.writeLn(`PREVIOUS item: ${TOOLS[nav.index].name}`);
     if (nav.index < 9) Console.writeLn(`NEXT item: ${TOOLS[nav.index + 2].name}`);
     Console.print();
 },PurchaseTool = function() {
-    if(data.tools[nav.index + 1] || data.money < TOOLS[nav.index + 1].cost) return;
-    data.money -= TOOLS[nav.index + 1].cost;
-    data.tools[nav.index + 1] = true;
-    data.currentTool = nav.index + 1;
-    PrintShop();
+    if(data.tools[nav.index + 1]) {
+        data.currentTool = nav.index + 1;
+    } else {
+        if(data.money < TOOLS[nav.index + 1].cost) return;
+        data.money -= TOOLS[nav.index + 1].cost;
+        data.tools[nav.index + 1] = true;
+        data.currentTool = nav.index + 1;
+    } PrintShop();
 },PrintMenu = function() {
     Console.clear();
     Console.writeLn("Virtual Forager Main Menu");
@@ -180,9 +192,11 @@ const LoadFunction = function () {
     }
     Console.print();
 },PrintBiome = function() {
+    if(data.biome == nav.index + 1 || data.level < T_DATA[nav.index + 1].req) CBS("disabled", 1, true);
+    else CBS("disabled", 1, false);
     Console.clear();
     Console.writeLn("Biome Selection");
-    Console.writeLn(`You are currently in the ${T_DATA[data.biome].name} biome.`);
+    Console.writeLn(`Current biome: ${T_DATA[data.biome].cute_name}`);
     Console.writeLn();
     Console.writeLn(`Currently viewing: ${T_DATA[nav.index + 1].cute_name} - ${data.level >= T_DATA[nav.index + 1].req ? "" : "LOCKED"} (Level ${T_DATA[nav.index + 1].req})`);
     Console.writeLn();
