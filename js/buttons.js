@@ -17,8 +17,22 @@ const LoadFunction = function () {
             CBT("BACK", 4);
             PrintBiome();
             break;
+        case 3:
+            nav.menu = nav.index + 4;
+            nav.index = 0;
+            CBT(nav.menu == 4 ? "SELECT" : "PURCHASE", 1);
+            if(nav.menu == 4 && data.currentTool == 1) CBS("disabled", 1, true);
+            CBT("PREVIOUS", 2);
+            CBT("NEXT", 3);
+            CBT("BACK", 4);
+            if(nav.menu == 4) PrintShop();
+            if(nav.menu == 5) PrintUpgradeShop();
+            break;
         case 4:
             PurchaseTool();
+            break;
+        case 5:
+            PurchaseUpgrade();
             break;
         case 10:
             SelectBiome();
@@ -31,9 +45,17 @@ const LoadFunction = function () {
             nav.menu = 0;
             SellAll();
             break;
+        case 3:
+            nav.index = Math.max(nav.index - 1, 0);
+            PrintShopMenu();
+            break;
         case 4:
             nav.index = Math.max(nav.index - 1, 0);
             PrintShop();
+            break;
+        case 5:
+            nav.index = Math.max(nav.index - 1, 0);
+            PrintUpgradeShop();
             break;
         case 10:
             nav.index = Math.max(nav.index - 1, 0);
@@ -44,19 +66,25 @@ const LoadFunction = function () {
     switch (nav.menu) {
         case 0:
         case 1:
-            nav.menu = 4;
+            nav.menu = 3;
             nav.index = 0;
-            CBT("SELECT", 1);
-            if(data.currentTool == 1) CBS("disabled", 1, true);
+            CBT("OPEN", 1);
             CBT("PREVIOUS", 2);
             CBT("NEXT", 3);
             CBT("BACK", 4);
-            PrintShop();
+            PrintShopMenu();
+            break;
+        case 3:
+            nav.index = Math.min(nav.index + 1, SHOPS.length - 2);
+            PrintShopMenu();
             break;
         case 4:
             nav.index = Math.min(nav.index + 1, TOOLS.length - 2);
-            
             PrintShop();
+            break;
+        case 5:
+            nav.index = Math.min(nav.index + 1, UPG.length - 2);
+            PrintUpgradeShop();
             break;
         case 10:
             nav.index = Math.min(nav.index + 1, T_DATA.length - 2);
@@ -80,8 +108,12 @@ const LoadFunction = function () {
             break;
         case 2:
         case 4:
+        case 3:
+        case 5:
         case 10:
             CBS("disabled", 1, false);
+            CBS("disabled", 2, false);
+            CBS("disabled", 3, false);
             nav.menu = 1;
             nav.index = 0;
             CBT("FORAGE", 1);
@@ -95,12 +127,15 @@ const LoadFunction = function () {
     window.location.href = "https://infernal3.github.io/#"
 },Root6Handler = function () {
 
-},Forage = function() {
+},Forage = function () {
     Console.clear();
         if(Date.now() >= data.nextUpdate) {
-            var sweep = Math.floor(TOOLS[data.currentTool].sweep);
+            var sweep = Math.floor(TOOLS[data.currentTool].sweep * (1 + (0.05 * data.upgrades[0])));
             if(Math.random() < (TOOLS[data.currentTool].sweep - sweep)) sweep++;
-            var amt = Math.min(Math.floor(sweep / (data.current.toughness + 1)), data.current.progressNeed - data.current.progress);
+            var sweep2 = Math.floor(sweep / (data.current.toughness + 1));
+            if(Math.random() < ((sweep / (data.current.toughness + 1)) - sweep2)) sweep2++;
+            var amt = Math.min(sweep2, data.current.progressNeed - data.current.progress);
+
             data.current.progress += amt;
             Console.writeLn(`${T_DATA[data.biome].name} Tree (${data.current.toughness} Toughness)`);
             if(amt < 1) Console.writeLn(`WARNING: This tree's toughness is too high for you! Use a better tool or lower your biome.`);
@@ -128,7 +163,7 @@ const LoadFunction = function () {
             Console.writeLn("If you forage too fast your tool will break. Upgrade your tool to prevent this")
         }
     Console.print();
-},SellAll = function() {
+},SellAll = function () {
     Console.clear();
     var delta = calcInventory(true);
     data.money += delta;
@@ -142,9 +177,9 @@ const LoadFunction = function () {
         Console.writeLn(`You now have ${fmt(data.money)} money.`);
     }
     Console.print();
-},PrintShop = function() {
+},PrintShop = function () {
     CBT(data.tools[nav.index + 1] ? "SELECT" : "PURCHASE", 1);
-    if(data.currentTool == nav.index + 1) CBS("disabled", 1, true);
+    if(data.currentTool == nav.index + 1 || !data.tools[nav.index + 1]) CBS("disabled", 1, true);
     else CBS("disabled", 1, false);
     Console.clear();
     Console.writeLn("Tools Shop");
@@ -155,10 +190,16 @@ const LoadFunction = function () {
     Console.writeLn(`<em>${TOOLS[nav.index + 1].lore}</em>`);
     Console.writeLn(`Tool Stats: ${TOOLS[nav.index + 1].sweep} sweep, ${(1000 / TOOLS[nav.index + 1].speed).toFixed(2)} cutting speed`);
     Console.writeLn();
-    if (nav.index > 0) Console.writeLn(`PREVIOUS item: ${TOOLS[nav.index].name}`);
-    if (nav.index < TOOLS.length - 2) Console.writeLn(`NEXT item: ${TOOLS[nav.index + 2].name}`);
+    if (nav.index > 0) {
+        Console.writeLn(`PREVIOUS item: ${TOOLS[nav.index].name}`);
+        CBS("disabled", 2, false);
+    } else CBS("disabled", 2, true);
+    if (nav.index < TOOLS.length - 2) {
+        Console.writeLn(`NEXT item: ${TOOLS[nav.index + 2].name}`);
+        CBS("disabled", 3, false);
+    } else CBS("disabled", 3, true);
     Console.print();
-},PurchaseTool = function() {
+},PurchaseTool = function () {
     if(data.tools[nav.index + 1]) {
         data.currentTool = nav.index + 1;
     } else {
@@ -167,7 +208,7 @@ const LoadFunction = function () {
         data.tools[nav.index + 1] = true;
         data.currentTool = nav.index + 1;
     } PrintShop();
-},PrintMenu = function() {
+},PrintMenu = function () {
     Console.clear();
     Console.writeLn("Virtual Forager Main Menu");
     Console.writeLn("<strong>Your Profile</strong>");
@@ -185,7 +226,7 @@ const LoadFunction = function () {
         if(!!data.inventory.cores[prop]) Console.writeLn(`${fmt(data.inventory.cores[prop])} ${prop} Core`);
     }
     Console.print();
-},PrintBiome = function() {
+},PrintBiome = function () {
     if(data.biome == nav.index + 1 || data.level < T_DATA[nav.index + 1].req) CBS("disabled", 1, true);
     else CBS("disabled", 1, false);
     Console.clear();
@@ -194,10 +235,16 @@ const LoadFunction = function () {
     Console.writeLn();
     Console.writeLn(`Currently viewing: ${T_DATA[nav.index + 1].cute_name} - ${data.level >= T_DATA[nav.index + 1].req ? "" : "LOCKED"} (Level ${T_DATA[nav.index + 1].req})`);
     Console.writeLn();
-    if (nav.index > 0) Console.writeLn(`PREVIOUS biome: ${T_DATA[nav.index].cute_name}`);
-    if (nav.index < T_DATA.length - 2) Console.writeLn(`NEXT biome: ${T_DATA[nav.index + 2].cute_name}`);
+    if (nav.index > 0) {
+        Console.writeLn(`PREVIOUS biome: ${T_DATA[nav.index].cute_name}`);
+        CBS("disabled", 2, false);
+    } else CBS("disabled", 2, true);
+    if (nav.index < T_DATA.length - 2) {
+        Console.writeLn(`NEXT biome: ${T_DATA[nav.index + 2].cute_name}`);
+        CBS("disabled", 3, false);
+    } else CBS("disabled", 3, true);
     Console.print();
-},SelectBiome = function() {
+},SelectBiome = function () {
     if(data.level >= T_DATA[nav.index + 1].req) {
         data.biome = nav.index + 1;
         var temp = Math.random() + 0.5;
@@ -207,7 +254,51 @@ const LoadFunction = function () {
         if(!data.inventory.cores[T_DATA[nav.index + 1].name]) data.inventory.cores[T_DATA[nav.index + 1].name] = 0
     }
     PrintBiome();
+},PrintShopMenu = function () {
+    Console.clear();
+    Console.writeLn("The Shop");
+    Console.writeLn(`You have ${fmt(data.money)} money.`);
+    Console.writeLn("Select which area of the shop to open");
+    Console.writeLn();
+    Console.writeLn(`Currently viewing: ${SHOPS[nav.index + 1].name}`);
+    Console.writeLn(`<em>${SHOPS[nav.index + 1].lore}</em>`);
+    Console.writeLn();
+    if (nav.index > 0) {
+        Console.writeLn(`PREVIOUS shop: ${SHOPS[nav.index].name}`);
+        CBS("disabled", 2, false);
+    } else CBS("disabled", 2, true);
+    if (nav.index < SHOPS.length - 2) {
+        Console.writeLn(`NEXT shop: ${SHOPS[nav.index + 2].name}`);
+        CBS("disabled", 3, false);
+    } else CBS("disabled", 3, true);
+    Console.print();
+},PrintUpgradeShop = function () {
+    if(data.money < UPG[nav.index + 1].tiers[data.upgrades[nav.index]] || data.upgrades[nav.index] >= UPG[nav.index + 1].max) CBS("disabled", 1, true);
+    else CBS("disabled", 1, false);
+    Console.clear();
+    Console.writeLn("Upgrades Shop");
+    Console.writeLn(`You have ${fmt(data.money)} money.`);
+    Console.writeLn();
+    Console.writeLn(`Currently viewing: ${UPG[nav.index + 1].name} (${data.upgrades[nav.index]}/${UPG[nav.index + 1].max}) - ${data.upgrades[nav.index] == UPG[nav.index + 1].max ? "MAXED OUT!" : `Cost ${fmt(UPG[nav.index + 1].tiers[data.upgrades[nav.index]])} money`}`);
+    Console.writeLn(`<em>${UPG[nav.index + 1].lore}</em>`);
+    Console.writeLn();
+    if (nav.index > 0) {
+        Console.writeLn(`PREVIOUS upgrade: ${UPG[nav.index].name}`);
+        CBS("disabled", 2, false);
+    } else CBS("disabled", 2, true);
+    if (nav.index < UPG.length - 2) {
+        Console.writeLn(`NEXT upgrade: ${UPG[nav.index + 2].name}`);
+        CBS("disabled", 3, false);
+    } else CBS("disabled", 3, true);
+    Console.print();
+},PurchaseUpgrade = function () {
+    if(data.money < UPG[nav.index + 1].tiers[data.upgrades[nav.index]] || data.upgrades[nav.index] >= UPG[nav.index + 1].max) return;
+    data.money -= UPG[nav.index + 1].tiers[data.upgrades[nav.index]];
+    data.upgrades[nav.index]++;
+    PrintUpgradeShop();
 }
+// nav.menu note:
+// 0 = Foraging, 1 = Main Menu, 2 = Main Menu Extras, 3 = Shop Menu, 4 = Shop Tools, 5 = Shop Upgrades, 6-7: NYI shop, 8-9: NYI, 10: Biome menu
 window.addEventListener("load", LoadFunction, {passive: true});
 el("root_button_1").addEventListener("click", Root1Handler, {passive: true});
 el("root_button_2").addEventListener("click", Root2Handler, {passive: true});

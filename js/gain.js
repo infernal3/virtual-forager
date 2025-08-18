@@ -16,11 +16,13 @@ const gainXP = function(E) {
     var t = 100 * (Math.pow(1.05, E - 1) + (0.5 * (E - 1)));
     return Math.floor(t * Math.pow(10, 2 - Math.floor(Math.log10(t)))) * Math.pow(10, Math.floor(Math.log10(t)) - 2);
 }, gainLog = function(E, T) {
-    data.inventory.logs[T] += E;
-    Console.writeLn(` + ${E} ${T+" Log"}`);
+    var F = Math.floor(E * (1 + (data.upgrades[2] * 0.2)));
+    data.inventory.logs[T] += F;
+    Console.writeLn(` + ${F} ${T+" Log"}`);
 }, gainCore = function(E, T) {
-    data.inventory.cores[T] += E;
-    Console.writeLn(` + ${E} ${T+" Core"}`);
+    var F = Math.floor(E * (1 + (data.upgrades[3] * 0.2)));
+    data.inventory.cores[T] += F;
+    Console.writeLn(` + ${F} ${T+" Core"}`);
 }, completeTree = function(E) {
     Console.writeLn();
     Console.writeLn("Tree completed!");
