@@ -18,6 +18,7 @@ const LocalLoad = function () {
             var chk = "Loading";
             try {
                 chk = JSON.parse(atob(localStorage.getItem("virtualForagerSave")));
+                nav.menu = 0;
                 console.log("Successfully loaded player data!")
             } catch(e) {
                 console.log(e);
