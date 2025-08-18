@@ -218,7 +218,7 @@ const LoadFunction = function () {
     Console.writeLn(`Current tool: ${TOOLS[data.currentTool].name}`);
     Console.writeLn(`Current biome: ${T_DATA[data.biome].cute_name}`);
     Console.writeLn();
-    Console.writeLn(`<strong>Inventory</strong> ${calcInventory(false) == 0 ? "" : `(Sell Value: ${calcInventory(false)} money)`}`);
+    Console.writeLn(`<strong>Inventory</strong> ${calcInventory(false) == 0 ? "" : `(Sell Value: ${fmt(calcInventory(false))} money)`}`);
     for(var prop in data.inventory.logs) {
         if(!!data.inventory.logs[prop]) Console.writeLn(`${fmt(data.inventory.logs[prop])} ${prop} Log`);
     }
