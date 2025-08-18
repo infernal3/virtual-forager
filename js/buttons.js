@@ -210,7 +210,7 @@ const LoadFunction = function () {
     } PrintShop();
 },PrintMenu = function () {
     Console.clear();
-    Console.writeLn("Virtual Forager Main Menu");
+    Console.writeLn("Virtual Woodcutter Main Menu");
     Console.writeLn("<strong>Your Profile</strong>");
     Console.writeLn();
     Console.writeLn(`You have ${fmt(data.money)} money.`);
@@ -306,3 +306,4 @@ el("root_button_3").addEventListener("click", Root3Handler, {passive: true});
 el("root_button_4").addEventListener("click", Root4Handler, {passive: true});
 el("root_button_5").addEventListener("click", Root5Handler, {passive: true});
 el("root_button_6").addEventListener("click", Root6Handler, {passive: true});
+window.setInterval(LocalSave, 60000);

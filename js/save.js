@@ -15,9 +15,10 @@ const DataDefault = {
 const LocalLoad = function () {
     if(localStorage){
         if (localStorage.getItem("virtualForagerSave")){
-            var chk;
+            var chk = "Loading";
             try {
                 chk = JSON.parse(atob(localStorage.getItem("virtualForagerSave")));
+                console.log("Successfully loaded player data!")
             } catch(e) {
                 console.log(e);
             } finally {
@@ -31,6 +32,16 @@ const LocalLoad = function () {
         data = DataDefault;
         nav.menu = 0;
     }
-}, Export = function () {
-
+}, LocalSave = function () {
+    if(localStorage){
+        try{
+            console.log("Attempting to SAVE game...");
+            chk = btoa(JSON.stringify(data));
+            localStorage.setItem("virtualForagerSave", chk);
+            console.log("Success!");
+        }catch(e){
+            console.log(e);
+            console.log("SAVE attempt failed... Retrying in 60 seconds");
+        }
+    }
 }
