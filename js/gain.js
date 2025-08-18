@@ -1,6 +1,6 @@
 const gainXP = function(E) {
     data.xp += E;
-    Console.writeLn(` + ${E} XP`);
+    Console.writeLn(` + ${fmt(E)} XP`);
     if(data.xp < levelingFormula(data.level)) return;
     var over = data.xp, passed = 0, old = data.level;
     while(over >= levelingFormula(data.level)) {
@@ -9,20 +9,18 @@ const gainXP = function(E) {
         data.level++;
     }
     data.xp = over;
-    if(passed <= 1) {
-        Console.writeLn(`<strong>LEVEL UP</strong>${passed == 1 ? "" : "x" + passed} ${old} -> ${data.level}`);
-    }
+    Console.writeLn(`<strong>${passed == 1 ? "" : "x" + passed} LEVEL UP</strong> ${fmt(old)} -> ${fmt(data.level)}`);
 }, levelingFormula = function(E) {
     var t = 100 * (Math.pow(1.05, E - 1) + (0.5 * (E - 1)));
     return Math.floor(t * Math.pow(10, 2 - Math.floor(Math.log10(t)))) * Math.pow(10, Math.floor(Math.log10(t)) - 2);
 }, gainLog = function(E, T) {
     var F = Math.floor(E * (1 + (data.upgrades[2] * 0.2)));
     data.inventory.logs[T] += F;
-    Console.writeLn(` + ${F} ${T+" Log"}`);
+    Console.writeLn(` + ${fmt(F)} ${T+" Log"}`);
 }, gainCore = function(E, T) {
     var F = Math.floor(E * (1 + (data.upgrades[3] * 0.2)));
     data.inventory.cores[T] += F;
-    Console.writeLn(` + ${F} ${T+" Core"}`);
+    Console.writeLn(` + ${fmt(F)} ${T+" Core"}`);
 }, completeTree = function(E) {
     Console.writeLn();
     Console.writeLn("Tree completed!");

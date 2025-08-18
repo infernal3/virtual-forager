@@ -1,4 +1,4 @@
-var data = "Loading", nav = {};
+var data = "Loading", nav = {menu: 0};
 const DataDefault = {
     level: 1,
     xp: 0,

@@ -179,7 +179,7 @@ const LoadFunction = function () {
     Console.print();
 },PrintShop = function () {
     CBT(data.tools[nav.index + 1] ? "SELECT" : "PURCHASE", 1);
-    if(data.currentTool == nav.index + 1 || !data.tools[nav.index + 1]) CBS("disabled", 1, true);
+    if(data.currentTool == nav.index + 1 || (!data.tools[nav.index + 1] && data.money < TOOLS[nav.index + 1].cost)) CBS("disabled", 1, true);
     else CBS("disabled", 1, false);
     Console.clear();
     Console.writeLn("Tools Shop");

@@ -11,6 +11,10 @@
     height:100%;
 }
 
+strong {
+    font-weight: 600;
+}
+
 #root {
     font-family: "GNU Unifont", sans-serif;
     width:100%;
@@ -32,8 +36,12 @@ div.clickable {
     font-size: 28px;
     user-select: none;
     -webkit-user-select: none;
-    
 }
+
+div.clickable:hover {
+    color: #58d0d2;
+}
+
 div.clickable.disabled {
     background: #7a7676;
     color: #080206;
