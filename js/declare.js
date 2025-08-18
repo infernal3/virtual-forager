@@ -19,7 +19,7 @@ const calcInventory = e => {
     }
     return delta * (1 + (0.05 * data.upgrades[1]));
 }
-const fmt = e => e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+const fmt = e => parseInt(e).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const T_DATA = [null,
     {name: "Oak",     xp: 1,    completeXPLow: 8,    completeXPHigh: 12,   toughness: 0,  baseLogs: 12, req: 0,  cute_name: "Oak Forest"},
