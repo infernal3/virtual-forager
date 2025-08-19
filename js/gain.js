@@ -24,6 +24,8 @@ const gainXP = function(E) {
 }, completeTree = function(E) {
     Console.writeLn();
     Console.writeLn("Tree completed!");
+    FillBiomeBase();
+    FillTree();
     gainXP(Math.ceil(randInt(T_DATA[E.type].completeXPLow, T_DATA[E.type].completeXPHigh) * E.size));
     gainCore(Math.ceil(randInt(4, 6) * E.size), T_DATA[E.type].name);
     var temp = Math.random() + 0.5;

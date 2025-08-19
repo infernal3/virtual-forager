@@ -1,6 +1,7 @@
 const LoadFunction = function () {
     LocalLoad();
     PrintMenu();
+    ResizeCanvas();
 },Root1Handler = function () {
     switch (nav.menu) {
         case 0:
@@ -144,6 +145,7 @@ const LoadFunction = function () {
             gainLog(amt, T_DATA[data.current.type].name);
             
             Console.writeLn(`The tree stage is now ${(data.current.progress * 100 / data.current.progressNeed).toFixed(2)}% complete!`);
+            Rect(0, 0.8*window.innerHeight-T_DATA[data.current.type].height-7, window.innerWidth, T_DATA[data.current.type].height * data.current.progress / data.current.progressNeed, BIOME_COLORS[4][data.biome])
             if (data.current.progress >= data.current.progressNeed) {
                 data.current.stage++;
                 if(data.current.stage >= data.current.stages) {
@@ -247,6 +249,8 @@ const LoadFunction = function () {
 },SelectBiome = function () {
     if(data.level >= T_DATA[nav.index + 1].req) {
         data.biome = nav.index + 1;
+        FillBiomeBase();
+        FillTree();
         var temp = Math.random() + 0.5;
         data.current = {type: data.biome, size: temp, stage: 0, stages: 1, toughness: T_DATA[data.biome].toughness, progress: 0, progressNeed: Math.round(T_DATA[data.biome].baseLogs * temp)}
 
@@ -307,3 +311,5 @@ el("root_button_4").addEventListener("click", Root4Handler, {passive: true});
 el("root_button_5").addEventListener("click", Root5Handler, {passive: true});
 el("root_button_6").addEventListener("click", Root6Handler, {passive: true});
 window.setInterval(LocalSave, 60000);
+
+window.addEventListener("resize", ResizeCanvas, {passive: true});

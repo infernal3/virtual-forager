@@ -22,14 +22,14 @@ const calcInventory = e => {
 const fmt = e => parseInt(e).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
 const T_DATA = [null,
-    {name: "Oak",     xp: 1,    completeXPLow: 8,    completeXPHigh: 12,   toughness: 0,  baseLogs: 12, req: 0,  cute_name: "Oak Forest"},
-    {name: "Birch",   xp: 4,    completeXPLow: 40,   completeXPHigh: 55,   toughness: 2,  baseLogs: 17, req: 10, cute_name: "Birch Forest"},
-    {name: "Spruce",  xp: 9,    completeXPLow: 130,  completeXPHigh: 150,  toughness: 5,  baseLogs: 44, req: 20, cute_name: "Spruce Woods"},
-    {name: "Palm",    xp: 30,   completeXPLow: 600,  completeXPHigh: 675,  toughness: 19, baseLogs: 20, req: 25, cute_name: "Palm Beach"},
-    {name: "Crimson", xp: 200,  completeXPLow: 6000, completeXPHigh: 8000, toughness: 80, baseLogs: 38, req: 50, cute_name: "The Nether"},
-    {name: "Willow",  xp: 310,  completeXPLow: 4000, completeXPHigh: 5200, toughness: 32, baseLogs: 15, req: 75, cute_name: "Willow Wilds"},
-    {name: "Pine",    xp: 13750,completeXPLow:800000,completeXPHigh:950000,toughness: 470,baseLogs: 90, req: 100,cute_name: "Pinerise Peak"},
-    {name: "Mangrove",xp: 540,  completeXPLow: 11000,completeXPHigh: 13500,toughness: 50, baseLogs: 94, req: 100,cute_name: "Mangrove Marsh"},
+    {name: "Oak",     xp: 1,    completeXPLow: 8,    completeXPHigh: 12,   toughness: 0,  baseLogs: 12, req: 0,  height: 381, cute_name: "Oak Forest"},
+    {name: "Birch",   xp: 4,    completeXPLow: 40,   completeXPHigh: 55,   toughness: 2,  baseLogs: 17, req: 10, height: 411, cute_name: "Birch Forest"},
+    {name: "Spruce",  xp: 9,    completeXPLow: 130,  completeXPHigh: 150,  toughness: 5,  baseLogs: 44, req: 20, height: 416, cute_name: "Spruce Woods"},
+    {name: "Palm",    xp: 30,   completeXPLow: 600,  completeXPHigh: 675,  toughness: 19, baseLogs: 20, req: 25, height: 331, cute_name: "Palm Beach"},
+    {name: "Crimson", xp: 200,  completeXPLow: 6000, completeXPHigh: 8000, toughness: 80, baseLogs: 38, req: 50, height: 381, cute_name: "The Nether"},
+    {name: "Willow",  xp: 310,  completeXPLow: 4000, completeXPHigh: 5200, toughness: 32, baseLogs: 15, req: 75, height: 194, cute_name: "Willow Wilds"},
+    {name: "Pine",    xp: 13750,completeXPLow:800000,completeXPHigh:950000,toughness: 470,baseLogs: 90, req: 100,height: 471, cute_name: "Pinerise Peak"},
+    {name: "Mangrove",xp: 540,  completeXPLow: 11000,completeXPHigh: 13500,toughness: 50, baseLogs: 94, req: 100,height: 384, cute_name: "Mangrove Marsh"},
 ]
 const TOOLS = [null,
     {name: "Wooden Axe", lore: "It's made of Oak Wood.",                          sweep: 1,   cost: 0, speed: 3500},
