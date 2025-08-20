@@ -19,6 +19,7 @@ const LoadFunction = function () {
             PrintBiome();
             break;
         case 3:
+            if(nav.index == 2 && Object.entries(data.inventory.special).length == 0) return;
             nav.menu = nav.index + 4;
             nav.index = 0;
             CBT(nav.menu == 4 ? "SELECT" : "PURCHASE", 1);
@@ -28,6 +29,7 @@ const LoadFunction = function () {
             CBT("BACK", 4);
             if(nav.menu == 4) PrintShop();
             if(nav.menu == 5) PrintUpgradeShop();
+            if(nav.menu == 6) PrintSpecialShop();
             break;
         case 4:
             PurchaseTool();
@@ -108,9 +110,10 @@ const LoadFunction = function () {
             PrintMenu();
             break;
         case 2:
-        case 4:
         case 3:
+        case 4:
         case 5:
+        case 6:
         case 10:
             CBS("disabled", 1, false);
             CBS("disabled", 2, false);
@@ -131,7 +134,8 @@ const LoadFunction = function () {
 },Forage = function () {
     Console.clear();
         if(Date.now() >= data.nextUpdate) {
-            var sweep = Math.floor(TOOLS[data.currentTool].sweep * (1 + (0.05 * data.upgrades[0])));
+            var specialSweep = !!data.inventory.special["Pure Sweep Core"] ? 1 + (0.01 * data.inventory.special["Pure Sweep Core"]) : 1;
+            var sweep = Math.floor(TOOLS[data.currentTool].sweep * (1 + (0.05 * data.upgrades[0])) * specialSweep);
             if(Math.random() < (TOOLS[data.currentTool].sweep - sweep)) sweep++;
             var sweep2 = Math.floor(sweep / (data.current.toughness + 1));
             if(Math.random() < ((sweep / (data.current.toughness + 1)) - sweep2)) sweep2++;
@@ -227,6 +231,9 @@ const LoadFunction = function () {
     for(var prop in data.inventory.cores) {
         if(!!data.inventory.cores[prop]) Console.writeLn(`${fmt(data.inventory.cores[prop])} ${prop} Core`);
     }
+    for(var prop in data.inventory.special) {
+        if(!!data.inventory.special[prop]) Console.writeLn(`${data.inventory.special[prop]} ${prop}`);
+    }
     Console.print();
 },PrintBiome = function () {
     if(data.biome == nav.index + 1 || data.level < T_DATA[nav.index + 1].req) CBS("disabled", 1, true);
@@ -266,6 +273,11 @@ const LoadFunction = function () {
     Console.writeLn();
     Console.writeLn(`Currently viewing: ${SHOPS[nav.index + 1].name}`);
     Console.writeLn(`<em>${SHOPS[nav.index + 1].lore}</em>`);
+    if (nav.index == 2 && Object.entries(data.inventory.special).length == 0) {
+        CBS("disabled", 1, true);
+        Console.writeLn();
+        Console.writeLn("You do not currently own any Special Items.");
+    }
     Console.writeLn();
     if (nav.index > 0) {
         Console.writeLn(`PREVIOUS shop: ${SHOPS[nav.index].name}`);
@@ -300,6 +312,20 @@ const LoadFunction = function () {
     data.money -= UPG[nav.index + 1].tiers[data.upgrades[nav.index]];
     data.upgrades[nav.index]++;
     PrintUpgradeShop();
+},PrintSpecialShop = function () {
+    Console.clear();
+    Console.writeLn("Special Item Gallery");
+    Console.writeLn("Your currently owned special items:");
+    for(var prop in data.inventory.special) {
+        if(!!data.inventory.special[prop]) {
+            Console.writeLn(`${data.inventory.special[prop]} ${prop}`);
+            Console.writeLn(`<em>${SPECIAL[prop].lore}</em>`)
+        }
+    }
+    CBS("disabled", 1, true);
+    CBS("disabled", 2, true);
+    CBS("disabled", 3, true);
+    Console.print();
 }
 // nav.menu note:
 // 0 = Foraging, 1 = Main Menu, 2 = Main Menu Extras, 3 = Shop Menu, 4 = Shop Tools, 5 = Shop Upgrades, 6-7: NYI shop, 8-9: NYI, 10: Biome menu
