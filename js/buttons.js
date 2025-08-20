@@ -278,6 +278,7 @@ const LoadFunction = function () {
         Console.writeLn();
         Console.writeLn("You do not currently own any Special Items.");
     }
+    else CBS("disabled", 1, false);
     Console.writeLn();
     if (nav.index > 0) {
         Console.writeLn(`PREVIOUS shop: ${SHOPS[nav.index].name}`);
