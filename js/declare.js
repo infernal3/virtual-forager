@@ -58,11 +58,11 @@ const SHOPS = [null,
     {name: "Special Gallery", lore: "View the boosts that your Special Items are giving."},
 ]
 const SPECIAL = {
-    "Pure Core": {lore: "The quality is so pure that it's priceless. +1 Determination"},
-    "Pure Sweep Core": {lore: "Incredibly pure quality. Your tools gain +1% sweep."},
-    "Pure Wisdom Core": {lore: "Incredibly pure quality. You gain +1% more XP."},
-    "Pure Tree Core": {lore: "Absolutely perfect quality. Trees give +1% more Cores."},
-    "Tree The Fish": {lore: "Extraordinarily rare drop. (0.001% chance)"}
+    "Pure Core": {lore: "The quality is so pure that it's priceless. Can't sell it."},
+    "Pure Sweep Core": {lore: "Your tools gain +1% sweep."},
+    "Pure Wisdom Core": {lore: "You gain +1% more XP."},
+    "Pure Tree Core": {lore: "Trees give +1% more Cores."},
+    "Tree the Fish": {lore: "An extremely rare drop, where did you find this? (0.001% chance)"}
 }
 const UPG = [null,
     {name: "Sweep Buff", lore: "Increase the Sweep of all tools by +5%.",       max:20, tiers: [500, 750, 1000, 1250, 1500, 2000, 2500, 3000, 3500, 4000, 5000, 7500, 10000, 15000, 20000, 50000, 200000, 1000000, 5000000, 20000000, Infinity]},
