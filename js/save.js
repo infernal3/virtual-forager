@@ -7,6 +7,7 @@ const DataDefault = {
     currentTool: 1,
     nextUpdate: 0,
     upgrades: [0, 0, 0, 0, 0, 0],
+    pureUpgrades: [0, 0, 0, 0],
     inventory: {logs: {Oak: 0}, cores: {Oak: 0}, special: {}},
     biome: 1,
     current: {type: 1, size: 0.5, stage: 0, stages: 1, toughness: 0, progress: 0, progressNeed: 6}
