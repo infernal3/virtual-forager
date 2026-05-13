@@ -146,7 +146,7 @@ const LoadFunction = function () {
     Console.clear();
         if(Date.now() >= data.nextUpdate) {
             var specialSweep = !!data.inventory.special["Pure Sweep Core"] ? 1 + (0.01 * data.inventory.special["Pure Sweep Core"]) : 1;
-            var sweep = Math.floor(TOOLS[data.currentTool].sweep * (1 + (0.05 * data.upgrades[0])) * specialSweep);
+            var sweep = Math.floor(TOOLS[data.currentTool].sweep * (1 + (0.05 * data.upgrades[0])) * (1 + (0.1 * data.pureUpgrades[0])) * specialSweep);
             if(Math.random() < (TOOLS[data.currentTool].sweep - sweep)) sweep++;
             var sweep2 = Math.floor(sweep / (data.current.toughness + 1));
             if(Math.random() < ((sweep / (data.current.toughness + 1)) - sweep2)) sweep2++;
