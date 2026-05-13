@@ -24,8 +24,14 @@ const LocalLoad = function () {
             } catch(e) {
                 console.log(e);
             } finally {
-                data = chk;
-                // insert DeepNaN logic here
+                var tempData = chk;
+                for(const property of Object.getOwnPropertyNames(DataDefault)) {
+                    if(!property in tempData){
+                        console.log("[LocalLoad] Property added because it was not present: "+ property);
+                        tempData[property] = DataDefault[property];
+                    }
+                }
+                data = tempData;
             }
         }
     }
