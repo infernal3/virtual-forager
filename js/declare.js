@@ -2,7 +2,7 @@ const el = e => document.getElementById(e);
 const randInt = (e, t) => Math.round((Math.random() * (t - e + 1)) + e - 0.5);
 const NaNCheck = e => isNaN(e) ? "0" : e;
 const CBT = (e, t) => {el(`root_button_${t}`).textContent = e}
-const delayCalc = () => Math.max(100,(Math.pow(0.9, data.upgrades[4]) * TOOLS[data.currentTool].speed * (data.current.toughness + 1)))
+const delayCalc = () => Math.max(250,(Math.pow(0.9, data.upgrades[4]) * (Math.pow(0.9, data.pureUpgrades[1]) * TOOLS[data.currentTool].speed * (data.current.toughness + 1)))
 const CBS = (e, t, y) => {
     if(y) el(`root_button_${t}`).classList.add(e)
     else  el(`root_button_${t}`).classList.remove(e)
