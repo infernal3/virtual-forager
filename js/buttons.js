@@ -29,7 +29,8 @@ const LoadFunction = function () {
             CBT("BACK", 4);
             if(nav.menu == 4) PrintShop();
             if(nav.menu == 5) PrintUpgradeShop();
-            if(nav.menu == 6) PrintSpecialShop();
+            if(nav.menu == 6) PrintPureUpgradeShop();
+            if(nav.menu == 7) PrintSpecialShop();
             break;
         case 4:
             PurchaseTool();
@@ -125,6 +126,7 @@ const LoadFunction = function () {
         case 4:
         case 5:
         case 6:
+        case 7:
         case 10:
             CBS("disabled", 1, false);
             CBS("disabled", 2, false);
