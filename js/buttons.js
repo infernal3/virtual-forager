@@ -37,6 +37,9 @@ const LoadFunction = function () {
         case 5:
             PurchaseUpgrade();
             break;
+        case 6:
+            PurchasePureUpgrade();
+            break;
         case 10:
             SelectBiome();
             break;
@@ -59,6 +62,10 @@ const LoadFunction = function () {
         case 5:
             nav.index = Math.max(nav.index - 1, 0);
             PrintUpgradeShop();
+            break;
+        case 6:
+            nav.index = Math.max(nav.index - 1, 0);
+            PrintPureUpgradeShop();
             break;
         case 10:
             nav.index = Math.max(nav.index - 1, 0);
@@ -88,6 +95,10 @@ const LoadFunction = function () {
         case 5:
             nav.index = Math.min(nav.index + 1, UPG.length - 2);
             PrintUpgradeShop();
+            break;
+        case 6:
+            nav.index = Math.min(nav.index + 1, UPG2.length - 2);
+            PrintPureUpgradeShop();
             break;
         case 10:
             nav.index = Math.min(nav.index + 1, T_DATA.length - 2);
@@ -164,9 +175,9 @@ const LoadFunction = function () {
         }
         else {
             Console.writeLn(`You're foraging too fast! Wait ${((data.nextUpdate - Date.now()) / 1000).toFixed(2)}s before foraging again.`);
-            Console.writeLn(`<em>Your foraging cooldown: ${(((delayCalc()))/1000).toFixed(2)}s${delayCalc() == 100 ? " (softcapped)" : ""}</em>`);
+            Console.writeLn(`<em>Your foraging cooldown: ${(((delayCalc()))/1000).toFixed(2)}s${delayCalc() == 250 ? " (softcapped)" : ""}</em>`);
             Console.writeLn();
-            Console.writeLn("If you forage too fast your tool will break. Upgrade your tool to prevent this")
+            Console.writeLn("All tools have a set cutting speed. Upgrade your tool to increase your cutting speed")
         }
     Console.print();
 },SellAll = function () {
@@ -308,11 +319,48 @@ const LoadFunction = function () {
         CBS("disabled", 3, false);
     } else CBS("disabled", 3, true);
     Console.print();
+},PrintPureUpgradeShop = function () {
+    if(!data.inventory.special["Pure Core"]) {
+        CBS("disabled", 1, true);
+        CBS("disabled", 2, true);
+        CBS("disabled", 3, true);
+        Console.clear();
+        Console.writeLn("Pure Upgrades Shop");
+        Console.writeLn("You don't have any Pure Cores in your inventory!");
+        Console.writeLn();
+        Console.writeLn("Come back when you have obtained some Pure Cores.");
+        Console.print();
+        return;
+    }
+    if(data.inventory.special["Pure Core"] < UPG2[nav.index + 1].tiers[data.pureUpgrades[nav.index]] || data.pureUpgrades[nav.index] >= UPG2[nav.index + 1].max) CBS("disabled", 1, true);
+    else CBS("disabled", 1, false);
+    Console.clear();
+    Console.writeLn("Pure Upgrades Shop");
+    Console.writeLn(`You have ${fmt(data.inventory.special["Pure Core"])} Pure Cores.`);
+    Console.writeLn();
+    Console.writeLn(`Currently viewing: ${UPG2[nav.index + 1].name} (${data.pureUpgrades[nav.index]}/${UPG2[nav.index + 1].max}) - ${data.pureUpgrades[nav.index] == UPG2[nav.index + 1].max ? "MAXED OUT!" : `Cost ${fmt(UPG2[nav.index + 1].tiers[data.pureUpgrades[nav.index]])} Pure Cores`}`);
+    Console.writeLn(`<em>${UPG2[nav.index + 1].lore}</em>`);
+    Console.writeLn();
+    if (nav.index > 0) {
+        Console.writeLn(`PREVIOUS pure upgrade: ${UPG2[nav.index].name}`);
+        CBS("disabled", 2, false);
+    } else CBS("disabled", 2, true);
+    if (nav.index < UPG2.length - 2) {
+        Console.writeLn(`NEXT pure upgrade: ${UPG2[nav.index + 2].name}`);
+        CBS("disabled", 3, false);
+    } else CBS("disabled", 3, true);
+    Console.print();
 },PurchaseUpgrade = function () {
     if(data.money < UPG[nav.index + 1].tiers[data.upgrades[nav.index]] || data.upgrades[nav.index] >= UPG[nav.index + 1].max) return;
     data.money -= UPG[nav.index + 1].tiers[data.upgrades[nav.index]];
     data.upgrades[nav.index]++;
     PrintUpgradeShop();
+},PurchasePureUpgrade = function () {
+    if(!data.inventory.special["Pure Core"]) return;
+    if(data.inventory.special["Pure Core"] < UPG2[nav.index + 1].tiers[data.pureUpgrades[nav.index]] || data.pureUpgrades[nav.index] >= UPG2[nav.index + 1].max) return;
+    data.inventory.special["Pure Core"] -= UPG2[nav.index + 1].tiers[data.pureUpgrades[nav.index]];
+    data.pureUpgrades[nav.index]++;
+    PrintPureUpgradeShop();
 },PrintSpecialShop = function () {
     Console.clear();
     Console.writeLn("Special Item Gallery");
