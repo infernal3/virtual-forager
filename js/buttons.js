@@ -253,7 +253,7 @@ const LoadFunction = function () {
             if (!!data.inventory.cores[prop]) Console.writeLn(`${fmt(data.inventory.cores[prop])} ${prop} Core`);
         }
         for (var prop in data.inventory.special) {
-            if (!!data.inventory.special[prop]) Console.writeLn(`${data.inventory.special[prop]} ${prop}`);
+            if (!!data.inventory.special[prop]) Console.writeLn(`${fmt(data.inventory.special[prop])} ${prop}`);
         }
         Console.print();
     },
@@ -384,7 +384,7 @@ const LoadFunction = function () {
         Console.writeLn("Your currently owned special items:");
         for (var prop in data.inventory.special) {
             if (!!data.inventory.special[prop]) {
-                Console.writeLn(`${data.inventory.special[prop]} ${prop}`);
+                Console.writeLn(`${fmt(data.inventory.special[prop])} ${prop}`);
                 Console.writeLn(`<em>${SPECIAL[prop].lore}</em>`);
             }
         }
