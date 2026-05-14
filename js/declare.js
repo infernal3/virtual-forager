@@ -76,9 +76,15 @@ const S_DATA = {
         Mangrove: 366000,
     },
 };
-const SHOPS = [null, { name: "Tools Shop", lore: "The place to buy new tools such as an axe or chainsaw." }, { name: "Upgrades Shop", lore: "Unlock permanent upgrades for your character." }, { name: "Pure Upgrade Shop", lore: "Use Pure Cores to unlock even more permanent upgrades." }, { name: "Special Gallery", lore: "View the boosts that your Special Items are giving." }];
+const SHOPS = [
+    null, 
+    { name: "Tools Shop", lore: "The place to buy new tools such as an axe or chainsaw." }, 
+    { name: "Upgrades Shop", lore: "Unlock permanent upgrades for your character." }, 
+    { name: "Pure Upgrade Shop", lore: "Use Pure Cores to unlock even more permanent upgrades." }, 
+    { name: "Special Gallery", lore: "View the boosts that your Special Items are giving." }
+];
 const SPECIAL = {
-    "Pure Core": { lore: "The quality is so pure that it's priceless. Can't sell it." },
+    "Pure Core": { lore: "Can be used to purchase upgrades in the Pure Upgrade shop." },
     "Pure Sweep Core": { lore: "Your tools gain +1% sweep." },
     "Pure Wisdom Core": { lore: "You gain +1% more XP." },
     "Pure Tree Core": { lore: "Trees give +1% more Cores." },
