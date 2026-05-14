@@ -123,7 +123,7 @@ const LoadFunction = function () {
                 CBT("?", 2);
                 CBT("?", 3);
                 CBT("BACK", 4);
-                PrintMenu();
+                PrintMenu("You are currently in Main Menu Extras. Select your biome here.");
                 break;
             case 2:
             case 3:
@@ -235,10 +235,16 @@ const LoadFunction = function () {
         }
         PrintShop();
     },
-    PrintMenu = function () {
+    PrintMenu = function (e) {
         Console.clear();
         Console.writeLn("Virtual Woodcutter Main Menu");
-        Console.writeLn("<strong>Your Profile</strong>");
+        if (e) {
+            Console.writeLn();
+            Console.writeLn(e);
+        }
+        else {
+            Console.writeLn("<strong>Your Profile</strong>");
+        }
         Console.writeLn();
         Console.writeLn(`You have ${fmt(data.money)} money.`);
         Console.writeLn(`<strong>Level ${data.level}</strong>, ${fmt(data.xp)}/${fmt(levelingFormula(data.level))} XP to next level`);
