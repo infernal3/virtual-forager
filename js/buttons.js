@@ -3,6 +3,31 @@ const LoadFunction = function () {
         PrintMenu();
         ResizeCanvas();
     },
+    /*
+     * The Navigation System
+     * There's a global object "nav". It has two important properties, nav.menu and nav.index.
+     *
+     * nav.menu indicates which menu's the player is on.
+     *
+     * nav.menu == 0: The player is actively Foraging, no menu displayed.
+     * nav.menu == 1: Main Menu
+     * nav.menu == 2: Main Menu extras (Access biome selection)
+     * nav.menu == 3: Shop
+     * nav.menu == 4: Tools Shop
+     * nav.menu == 5: Upgrade Shop
+     * nav.menu == 6: Pure Upgrade Shop
+     * nav.menu == 7: Special Gallery
+     * nav.menu == 10: Biome selection
+     *
+     * The menus have this current hierarchy:
+     *
+     * Main Menu <---- Shop      <========== Tools Shop, Upgrade Shop, Pure Upgrade Shop, Special Gallery
+     *       ^-------- Foraging
+     *    ^----------- MM Extras <---------- Biome selection
+     *
+     * nav.index indicates which page the player is on, if the menu has pages.
+     * Menus that support pages include some shop menus. The main menu does not have pages.
+     */
     Root1Handler = function () {
         switch (nav.menu) {
             case 0:
@@ -127,10 +152,6 @@ const LoadFunction = function () {
                 break;
             case 2:
             case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
             case 10:
                 CBS("disabled", 1, false);
                 CBS("disabled", 2, false);
@@ -142,6 +163,18 @@ const LoadFunction = function () {
                 CBT("SHOP", 3);
                 CBT("MENU", 4);
                 PrintMenu();
+                break;
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                nav.menu = 3;
+                nav.index = 0;
+                CBT("OPEN", 1);
+                CBT("PREVIOUS", 2);
+                CBT("NEXT", 3);
+                CBT("BACK", 4);
+                PrintShopMenu();
                 break;
         }
     },
@@ -399,8 +432,6 @@ const LoadFunction = function () {
         CBS("disabled", 3, true);
         Console.print();
     };
-// nav.menu note:
-// 0 = Foraging, 1 = Main Menu, 2 = Main Menu Extras, 3 = Shop Menu, 4 = Shop Tools, 5 = Shop Upgrades, 6-7: NYI shop, 8-9: NYI, 10: Biome menu
 window.addEventListener("load", LoadFunction, { passive: true });
 el("root_button_1").addEventListener("click", Root1Handler, { passive: true });
 el("root_button_2").addEventListener("click", Root2Handler, { passive: true });
