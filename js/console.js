@@ -3,17 +3,17 @@ const Console = {
     clear: () => {
         Console.text = [];
     },
-    write: E => {
+    write: (E) => {
         Console.text[Console.text.length] += E;
     },
-    writeLn: E => {
-        var D = !E ? "" : E;
-        Console.text.push(D);
+    writeLn: (E) => {
+        var functionInput = !E ? "" : E;
+        Console.text.push(functionInput);
     },
     print: () => {
         el("console").innerHTML = "";
-        for(var line of Console.text){
+        for (var line of Console.text) {
             el("console").innerHTML += line + "<br>";
         }
-    }
-}
+    },
+};
