@@ -29,7 +29,7 @@ const gainXP = function(E) {
     FillTree();
     gainXP(Math.ceil(randInt(T_DATA[E.type].completeXPLow, T_DATA[E.type].completeXPHigh) * E.size));
     gainCore(Math.ceil(randInt(4, 6) * E.size), T_DATA[E.type].name);
-    var temp = Math.random() + 0.5,temp4 = data.upgrades[5] > 0 ? 2 : 1;
+    var temp = Math.random() + 0.5,temp4 = (data.upgrades[5] > 0 ? 2 : 1) + (data.pureUpgrades[2] * 0.2);
     
     gainSpecial("Pure Core", 0.01 * temp4);
     gainSpecial("Pure Sweep Core", 0.0005 * temp4);

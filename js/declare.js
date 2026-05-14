@@ -2,7 +2,7 @@ const el = e => document.getElementById(e);
 const randInt = (e, t) => Math.round((Math.random() * (t - e + 1)) + e - 0.5);
 const NaNCheck = e => isNaN(e) ? "0" : e;
 const CBT = (e, t) => {el(`root_button_${t}`).textContent = e}
-const delayCalc = () => Math.max(100,(Math.pow(0.9, data.upgrades[4]) * TOOLS[data.currentTool].speed * (data.current.toughness + 1)))
+const delayCalc = () => Math.max(250,(Math.pow(0.9, data.upgrades[4]) * Math.pow(0.9, data.pureUpgrades[1]) * TOOLS[data.currentTool].speed * (data.current.toughness + 1)))
 const CBS = (e, t, y) => {
     if(y) el(`root_button_${t}`).classList.add(e)
     else  el(`root_button_${t}`).classList.remove(e)
@@ -69,8 +69,8 @@ const S_DATA = {logs: {
 const SHOPS = [null,
     {name: "Tools Shop", lore: "The place to buy new tools such as an axe or chainsaw."},
     {name: "Upgrades Shop", lore: "Unlock permanent upgrades for your character."},
+    {name: "Pure Upgrade Shop", lore: "Use Pure Cores to unlock even more permanent upgrades."},
     {name: "Special Gallery", lore: "View the boosts that your Special Items are giving."},
-  //{name: "Pure Upgrade Shop", lore: "Use Pure Cores to unlock more permanent upgrades."},
 ]
 const SPECIAL = {
     "Pure Core": {lore: "The quality is so pure that it's priceless. Can't sell it."},
