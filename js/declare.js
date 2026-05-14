@@ -69,8 +69,8 @@ const S_DATA = {logs: {
 const SHOPS = [null,
     {name: "Tools Shop", lore: "The place to buy new tools such as an axe or chainsaw."},
     {name: "Upgrades Shop", lore: "Unlock permanent upgrades for your character."},
+    {name: "Pure Upgrade Shop", lore: "Use Pure Cores to unlock even more permanent upgrades."},
     {name: "Special Gallery", lore: "View the boosts that your Special Items are giving."},
-  //{name: "Pure Upgrade Shop", lore: "Use Pure Cores to unlock more permanent upgrades."},
 ]
 const SPECIAL = {
     "Pure Core": {lore: "The quality is so pure that it's priceless. Can't sell it."},
