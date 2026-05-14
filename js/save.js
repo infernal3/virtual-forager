@@ -26,7 +26,7 @@ const LocalLoad = function () {
             } finally {
                 var tempData = chk;
                 for(const property of Object.getOwnPropertyNames(DataDefault)) {
-                    if(!property in tempData){
+                    if(!(property in tempData)){
                         console.log("[LocalLoad] Property added because it was not present: "+ property);
                         tempData[property] = DataDefault[property];
                     }
