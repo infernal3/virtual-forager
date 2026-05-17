@@ -84,11 +84,11 @@ const SHOPS = [
     { name: "Special Gallery", lore: "View the boosts that your Special Items are giving." }
 ];
 const SPECIAL = {
-    "Pure Core": { lore: "Can be used to purchase upgrades in the Pure Upgrade shop." },
+    "Pure Core": { lore: "Currency for the Pure Upgrade shop." },
     "Pure Sweep Core": { lore: "Your tools gain +1% sweep." },
     "Pure Wisdom Core": { lore: "You gain +1% more XP." },
     "Pure Tree Core": { lore: "Trees give +1% more Cores." },
-    "Tree the Fish": { lore: "An extremely rare drop, where did you find this? (0.001% chance)" },
+    "Tree the Fish": { lore: "An extremely rare drop. (0.001% chance)" },
 };
 const UPG = [
     null,
